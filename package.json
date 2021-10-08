@@ -11,6 +11,7 @@
     "/errors.js",
     "/lib/**/*.js"
   ],
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/frida/gumjs-readable-stream"
