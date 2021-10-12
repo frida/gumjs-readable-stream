@@ -3,6 +3,7 @@ import compose from './lib/compose.js';
 import { destroyer } from './lib/destroy.js';
 import Duplex from './lib/duplex.js';
 import eos from './lib/end-of-stream.js';
+import { Stream as LegacyStream } from './lib/legacy.js';
 import PassThrough from './lib/passthrough.js';
 import pipeline from './lib/pipeline.js';
 import * as promises from './lib/promises.js';
@@ -17,6 +18,7 @@ export default Readable;
 export {
   isDisturbed,
   Readable as Stream,
+  LegacyStream,
   Readable,
   Writable,
   Duplex,
@@ -29,6 +31,26 @@ export {
   compose,
   promises,
 };
+
+LegacyStream.isDisturbed = isDisturbed;
+LegacyStream.Readable = Readable;
+LegacyStream.Writable = Writable;
+LegacyStream.Duplex = Duplex;
+LegacyStream.Transform = Transform;
+LegacyStream.PassThrough = PassThrough;
+LegacyStream.pipeline = pipeline;
+LegacyStream.addAbortSignal = addAbortSignal;
+LegacyStream.finished = eos;
+LegacyStream.destroy = destroyer;
+LegacyStream.compose = compose;
+
+Object.defineProperty(LegacyStream, 'promises', {
+  configurable: true,
+  enumerable: true,
+  get() {
+    return promises;
+  }
+});
 
 Object.defineProperty(pipeline, promisify.custom, {
   enumerable: true,
@@ -43,3 +65,6 @@ Object.defineProperty(eos, promisify.custom, {
     return promises.finished;
   }
 });
+
+// Backwards-compat with node 0.4.x
+LegacyStream.Stream = LegacyStream;
