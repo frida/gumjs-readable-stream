@@ -12,7 +12,8 @@ import Transform from './lib/transform.js';
 import { isDisturbed } from './lib/utils.js';
 import Writable from './lib/writable.js';
 
-import { promisify } from 'util';
+import { Buffer } from 'buffer';
+import { promisify, types } from 'util';
 
 export default Readable;
 export {
@@ -68,3 +69,6 @@ Object.defineProperty(eos, promisify.custom, {
 
 // Backwards-compat with node 0.4.x
 LegacyStream.Stream = LegacyStream;
+
+Stream._isUint8Array = types.isUint8Array;
+Stream._uint8ArrayToBuffer = Buffer.from;
