@@ -70,5 +70,5 @@ Object.defineProperty(eos, promisify.custom, {
 // Backwards-compat with node 0.4.x
 LegacyStream.Stream = LegacyStream;
 
-Stream._isUint8Array = types.isUint8Array;
-Stream._uint8ArrayToBuffer = Buffer.from;
+LegacyStream._isUint8Array = types.isUint8Array;
+LegacyStream._uint8ArrayToBuffer = Buffer.from;
